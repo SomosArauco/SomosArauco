@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Calcula tu margen</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#eef1f4;
+  padding:15px;
+  color:#222;
+  transition:0.25s;
+}
+
+.container{
+  max-width:480px;
+  margin:auto;
+}
+
+/* BOTON DARK MODE */
+
+#darkModeToggle{
+  position:fixed;
+  top:14px;
+  right:14px;
+  width:44px;
+  height:44px;
+  border:none;
+  border-radius:999px;
+  background:#1f2937;
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+  z-index:999;
+  box-shadow:0 3px 10px rgba(0,0,0,0.25);
+  transition:0.25s;
+}
+
+#darkModeToggle:hover{
+  transform:scale(1.05);
+}
+
+/* CARD */
+
+.card{
+  background:white;
+  padding:18px;
+  border-radius:16px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom:20px;
+  transition:0.25s;
+}
+
+h1{
+  font-size:30px;
+  margin-bottom:18px;
+  text-align:center;
+  color:#2f5fb3;
+}
+
+.section-subtitle{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:14px;
+  color:#384252;
+  padding-left:4px;
+}
+
+label{
+  display:block;
+  margin-top:14px;
+  margin-bottom:6px;
+  font-weight:bold;
+  font-size:14px;
+  color:#465063;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #cfd6df;
+  font-size:16px;
+  background:white;
+  color:#222;
+  transition:0.25s;
+}
+
+input:focus{
+  outline:none;
+  border-color:#2f5fb3;
+}
+
+/* SWITCH */
+
+.switch-container{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.switch-btn{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  font-weight:bold;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.2s;
+  background:#d5dce5;
+  color:#556070;
+}
+
+.switch-active{
+  background:#2f5fb3;
+  color:white;
+}
+
+/* BOTON */
+
+.btn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:bold;
+  margin-top:20px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.btn-primary{
+  background:#2f5fb3;
+  color:white;
+}
+
+.btn-primary:hover{
+  background:#284f96;
+}
+
+/* PRODUCTOS */
+
+.product{
+  background:white;
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 3px 12px rgba(0,0,0,0.05);
+  transition:0.25s;
+}
+
+.product-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.product-title{
+  font-size:22px;
+  font-weight:bold;
+  color:#263140;
+}
+
+.iva-badge{
+  background:#2f5fb3;
+  color:white;
+  padding:7px 11px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+/* SECCIONES */
+
+.section{
+  background:#f4f6f9;
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:14px;
+  transition:0.25s;
+}
+
+.section-title{
+  font-size:13px;
+  font-weight:bold;
+  color:#6b7482;
+  margin-bottom:12px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+  gap:10px;
+}
+
+.row:last-child{
+  margin-bottom:0;
+}
+
+.label{
+  font-size:14px;
+  color:#5c6675;
+}
+
+.value{
+  font-size:16px;
+  font-weight:bold;
+  color:#222;
+}
+
+/* TARJETAS PRECIOS */
+
+.price-card{
+  border-radius:18px;
+  padding:18px;
+  margin-top:14px;
+  background:#f4f6f9;
+  border:1px solid #d8dee7;
+  transition:0.25s;
+}
+
+.price-ok{
+  border:2px solid #3f9b63;
+}
+
+.price-bad{
+  border:2px solid #c55a5a;
+}
+
+.price-neutral{
+  border:1px solid #cfd6df;
+}
+
+.price-card-title{
+  font-size:22px;
+  font-weight:bold;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#2b3442;
+}
+
+.price-status{
+  width:12px;
+  height:12px;
+  border-radius:999px;
+  display:inline-block;
+}
+
+.status-green{
+  background:#3f9b63;
+}
+
+.status-red{
+  background:#c55a5a;
+}
+
+.status-gray{
+  background:#8a94a3;
+}
+
+.price-block{
+  background:white;
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:14px;
+  border:1px solid #e4e8ee;
+  transition:0.25s;
+}
+
+.price-label{
+  font-size:13px;
+  color:#6b7482;
+  margin-bottom:6px;
+}
+
+.price-value{
+  font-size:34px;
+  font-weight:bold;
+  line-height:1;
+  color:#1f2937;
+}
+
+.price-current{
+  font-size:28px;
+  font-weight:bold;
+  line-height:1;
+  color:#3f4855;
+}
+
+.price-message{
+  margin-top:12px;
+  font-size:15px;
+  line-height:1.5;
+  color:#556070;
+}
+
+.success-text{
+  color:#2f7d4f;
+  font-weight:bold;
+}
+
+.error-text{
+  color:#b34747;
+  font-weight:bold;
+}
+
+/* BOTONES PRODUCTO */
+
+.buttons{
+  display:flex;
+  gap:10px;
+  margin-top:16px;
+}
+
+.small-btn{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+  color:white;
+  font-size:14px;
+}
+
+.edit{
+  background:#d18a2e;
+}
+
+.delete{
+  background:#b84b4b;
+}
+
+/* FOOTER */
+
+.footer-actions{
+  background:white;
+  border-radius:18px;
+  padding:16px;
+  margin-top:24px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  transition:0.25s;
+}
+
+.footer-buttons{
+  display:flex;
+  gap:12px;
+}
+
+.footer-btn{
+  flex:1;
+  border:none;
+  border-radius:14px;
+  padding:14px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  color:white;
+}
+
+.btn-clear{
+  background:#b84b4b;
+}
+
+.btn-whatsapp{
+  background:#2f9e5a;
+}
+
+/* ===== DARK MODE ===== */
+
+.dark-mode{
+  background:#111827;
+  color:#f3f4f6;
+}
+
+.dark-mode .card,
+.dark-mode .product,
+.dark-mode .footer-actions{
+  background:#1f2937;
+  color:#f3f4f6;
+}
+
+.dark-mode .section,
+.dark-mode .price-card{
+  background:#273244;
+}
+
+.dark-mode input{
+  background:#111827;
+  color:white;
+  border:1px solid #3c4b63;
+}
+
+.dark-mode .label,
+.dark-mode .price-label,
+.dark-mode .section-title,
+.dark-mode .price-message,
+.dark-mode label{
+  color:#c7d0dc;
+}
+
+.dark-mode .value,
+.dark-mode .price-value,
+.dark-mode .price-current,
+.dark-mode .product-title,
+.dark-mode .price-card-title,
+.dark-mode .section-subtitle{
+  color:white;
+}
+
+.dark-mode .price-block{
+  background:#182230;
+  border:1px solid #334155;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- BOTON DARK MODE -->
+<button id="darkModeToggle">🌙</button>
+
+<div class="container">
+
+  <div class="card">
+
+    <h1>Calcula tu margen</h1>
+
+    <label>Nombre del producto</label>
+    <input type="text" id="nombre" placeholder="Opcional">
+
+    <label>¿Incluye IVA?</label>
+
+    <div class="switch-container">
+
+      <button
+        id="btnSi"
+        class="switch-btn switch-active"
+        onclick="cambiarIVA('si')">
+        SI
+      </button>
+
+      <button
+        id="btnNo"
+        class="switch-btn"
+        onclick="cambiarIVA('no')">
+        NO
+      </button>
+
+    </div>
+
+    <label id="labelCosto">Costo bruto</label>
+    <input type="text" id="costo" placeholder="Ej: 1.000">
+
+    <label>Markup (%)</label>
+    <input type="number" id="markup" placeholder="Ej: 30">
+
+    <label>Precio actual mayorista</label>
+    <input type="text" id="precioMayoristaActual" placeholder="Opcional">
+
+    <label>Precio actual detalle</label>
+    <input type="text" id="precioDetalleActual" placeholder="Opcional">
+
+    <button class="btn btn-primary" onclick="agregarProducto()">
+      Agregar
+    </button>
+
+  </div>
+
+  <div class="section-subtitle">
+    Tus productos
+  </div>
+
+  <div id="listaProductos"></div>
+
+  <div class="footer-actions">
+
+    <div class="footer-buttons">
+
+      <button
+        class="footer-btn btn-clear"
+        onclick="borrarTodo()">
+
+        🗑️ Borrar todo
+
+      </button>
+
+      <button
+        class="footer-btn btn-whatsapp"
+        onclick="compartirWhatsApp()">
+
+        📲 WhatsApp
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+let productos = [];
+let ivaSeleccionado = "si";
+
+/* DARK MODE */
+
+const darkBtn =
+  document.getElementById("darkModeToggle");
+
+darkBtn.addEventListener("click", () => {
+
+  document.body.classList.toggle("dark-mode");
+
+  if(
+    document.body.classList.contains("dark-mode")
+  ){
+    darkBtn.innerHTML = "☀️";
+  } else {
+    darkBtn.innerHTML = "🌙";
+  }
+
+});
+
+/* IVA */
+
+function cambiarIVA(valor){
+
+  ivaSeleccionado = valor;
+
+  const btnSi = document.getElementById("btnSi");
+  const btnNo = document.getElementById("btnNo");
+
+  if(valor === "si"){
+
+    btnSi.classList.add("switch-active");
+    btnNo.classList.remove("switch-active");
+
+    document.getElementById("labelCosto").innerText =
+      "Costo bruto";
+
+  } else {
+
+    btnNo.classList.add("switch-active");
+    btnSi.classList.remove("switch-active");
+
+    document.getElementById("labelCosto").innerText =
+      "Costo neto";
+  }
+}
+
+/* FORMATO */
+
+function formatearCLP(numero){
+  return Number(numero).toLocaleString("es-CL");
+}
+
+function limpiarNumero(valor){
+
+  if(!valor) return 0;
+
+  return Number(
+    valor.toString().replace(/\./g, "")
+  );
+}
+
+function aplicarFormatoMoneda(id){
+
+  const input = document.getElementById(id);
+
+  input.addEventListener("input", function(e){
+
+    let valor = e.target.value
+      .replace(/\./g, "")
+      .replace(/\D/g, "");
+
+    if(valor === ""){
+      e.target.value = "";
+      return;
+    }
+
+    e.target.value =
+      Number(valor).toLocaleString("es-CL");
+  });
+}
+
+aplicarFormatoMoneda("costo");
+aplicarFormatoMoneda("precioMayoristaActual");
+aplicarFormatoMoneda("precioDetalleActual");
+
+/* AGREGAR PRODUCTO */
+
+function agregarProducto(){
+
+  let nombre =
+    document.getElementById("nombre").value.trim();
+
+  if(nombre === ""){
+    nombre = "Producto sin nombre";
+  }
+
+  const costoOriginal = limpiarNumero(
+    document.getElementById("costo").value
+  );
+
+  const markup = parseFloat(
+    document.getElementById("markup").value
+  );
+
+  const precioMayoristaActual = limpiarNumero(
+    document.getElementById("precioMayoristaActual").value
+  );
+
+  const precioDetalleActual = limpiarNumero(
+    document.getElementById("precioDetalleActual").value
+  );
+
+  if(!costoOriginal || isNaN(markup)){
+    alert("Completa todos los campos");
+    return;
+  }
+
+  let costoBruto = costoOriginal;
+
+  if(ivaSeleccionado === "no"){
+    costoBruto = costoOriginal * 1.19;
+  }
+
+  const precioMayoristaSugerido =
+    costoBruto * (1 + markup / 100);
+
+  let precioDetalleSugerido;
+
+  if(
+    precioDetalleActual > 0 &&
+    precioMayoristaActual === 0
+  ){
+    precioDetalleSugerido =
+      precioMayoristaSugerido;
+  } else {
+    precioDetalleSugerido =
+      precioMayoristaSugerido + 300;
+  }
+
+  productos.push({
+    nombre,
+    iva: ivaSeleccionado,
+    costoOriginal,
+    costoBruto,
+    markup,
+    precioMayoristaActual,
+    precioDetalleActual,
+    precioMayoristaSugerido,
+    precioDetalleSugerido
+  });
+
+  limpiarFormulario();
+  renderProductos();
+}
+
+/* RENDER */
+
+function renderProductos(){
+
+  const lista =
+    document.getElementById("listaProductos");
+
+  lista.innerHTML = "";
+
+  productos.forEach((producto) => {
+
+    const tieneMayorista =
+      producto.precioMayoristaActual > 0;
+
+    const tieneDetalle =
+      producto.precioDetalleActual > 0;
+
+    const mayoristaOk =
+      producto.precioMayoristaActual >=
+      producto.precioMayoristaSugerido;
+
+    const detalleOk =
+      producto.precioDetalleActual >=
+      producto.precioDetalleSugerido;
+
+    lista.innerHTML += `
+    <div class="product">
+
+      <div class="product-header">
+
+        <div class="product-title">
+          ${producto.nombre}
+        </div>
+
+        <div class="iva-badge">
+          IVA ${producto.iva === "si"
+            ? "INCLUIDO"
+            : "NO INCLUIDO"}
+        </div>
+
+      </div>
+
+      <div class="section">
+
+        <div class="section-title">
+          Costos
+        </div>
+
+        <div class="row">
+          <div class="label">Costo ingresado</div>
+
+          <div class="value">
+            $${formatearCLP(producto.costoOriginal)}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label">Costo final con IVA</div>
+
+          <div class="value">
+            $${formatearCLP(
+              Math.round(producto.costoBruto)
+            )}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label">Markup</div>
+
+          <div class="value">
+            ${producto.markup}%
+          </div>
+        </div>
+
+      </div>
+
+      ${
+        !(
+          producto.precioDetalleActual > 0 &&
+          producto.precioMayoristaActual === 0
+        )
+        ?
+        `
+        <div class="price-card ${
+          tieneMayorista
+          ? (mayoristaOk ? "price-ok" : "price-bad")
+          : "price-neutral"
+        }">
+
+          <div class="price-card-title">
+
+            <span class="price-status ${
+              !tieneMayorista
+              ? "status-gray"
+              : (mayoristaOk ? "status-green" : "status-red")
+            }"></span>
+
+            Precio Mayorista
+
+            ${
+              mayoristaOk && tieneMayorista
+              ? "✓"
+              : ""
+            }
+
+          </div>
+
+          <div class="price-block">
+
+            <div class="price-label">
+              Precio sugerido
+            </div>
+
+            <div class="price-value">
+
+              $${formatearCLP(
+                Math.round(producto.precioMayoristaSugerido)
+              )}
+
+            </div>
+
+          </div>
+
+          ${
+            tieneMayorista
+            ?
+            `
+            <div class="price-block">
+
+              <div class="price-label">
+                Precio actual
+              </div>
+
+              <div class="price-current">
+
+                $${formatearCLP(
+                  producto.precioMayoristaActual
+                )}
+
+              </div>
+
+            </div>
+
+            <div class="price-message">
+
+              ${
+                mayoristaOk
+                ? '<span class="success-text">Cumple el margen sugerido.</span>'
+                : '<span class="error-text">Está bajo el margen sugerido.</span>'
+              }
+
+            </div>
+            `
+            :
+            `
+            <div class="price-message">
+              No ingresaste un precio mayorista actual.
+            </div>
+            `
+          }
+
+        </div>
+        `
+        :
+        ""
+      }
+
+      <div class="price-card ${
+        tieneDetalle
+        ? (detalleOk ? "price-ok" : "price-bad")
+        : "price-neutral"
+      }">
+
+        <div class="price-card-title">
+
+          <span class="price-status ${
+            !tieneDetalle
+            ? "status-gray"
+            : (detalleOk ? "status-green" : "status-red")
+          }"></span>
+
+          Precio Detalle
+
+          ${
+            detalleOk && tieneDetalle
+            ? "✓"
+            : ""
+          }
+
+        </div>
+
+        <div class="price-block">
+
+          <div class="price-label">
+
+            ${
+              (
+                producto.precioDetalleActual > 0 &&
+                producto.precioMayoristaActual === 0
+              )
+              ? "Precio sugerido"
+              : "Referencia mínima"
+            }
+
+          </div>
+
+          <div class="price-value">
+
+            $${formatearCLP(
+              Math.round(producto.precioDetalleSugerido)
+            )}
+
+          </div>
+
+        </div>
+
+        ${
+          tieneDetalle
+          ?
+          `
+          <div class="price-block">
+
+            <div class="price-label">
+              Precio actual
+            </div>
+
+            <div class="price-current">
+
+              $${formatearCLP(
+                producto.precioDetalleActual
+              )}
+
+            </div>
+
+          </div>
+
+          <div class="price-message">
+
+            ${
+              detalleOk
+              ? '<span class="success-text">Cumple la referencia sugerida.</span>'
+              : '<span class="error-text">Está bajo la referencia sugerida.</span>'
+            }
+
+          </div>
+          `
+          :
+          `
+          <div class="price-message">
+            No ingresaste un precio detalle actual.
+          </div>
+          `
+        }
+
+      </div>
+
+    </div>
+    `;
+  });
+}
+
+/* BORRAR TODO */
+
+function borrarTodo(){
+
+  if(confirm("¿Borrar todos los productos?")){
+
+    productos = [];
+    renderProductos();
+  }
+}
+
+/* WHATSAPP */
+
+function compartirWhatsApp(){
+
+  if(productos.length === 0){
+    alert("No hay productos para compartir");
+    return;
+  }
+
+  let texto = "";
+
+  productos.forEach(producto => {
+
+    texto += `*${producto.nombre}* - Costo bruto: $${formatearCLP(Math.round(producto.costoBruto))} (+${producto.markup}%)\n`;
+
+    if(
+      !(
+        producto.precioDetalleActual > 0 &&
+        producto.precioMayoristaActual === 0
+      )
+    ){
+
+      texto += `- P. Mayorista sugerido: *$${formatearCLP(Math.round(producto.precioMayoristaSugerido))}*\n`;
+
+      if(producto.precioMayoristaActual > 0){
+
+        texto += `- P. Mayorista actual: $${formatearCLP(producto.precioMayoristaActual)}\n`;
+      }
+
+      texto += `\n`;
+    }
+
+    texto += `- P. Detalle sugerido: *$${formatearCLP(Math.round(producto.precioDetalleSugerido))}*\n`;
+
+    if(producto.precioDetalleActual > 0){
+
+      texto += `- P. Detalle actual: $${formatearCLP(producto.precioDetalleActual)}\n`;
+    }
+
+    texto += `\n\n`;
+  });
+
+  const url =
+    `https://wa.me/?text=${encodeURIComponent(texto)}`;
+
+  window.open(url, "_blank");
+}
+
+/* LIMPIAR */
+
+function limpiarFormulario(){
+
+  document.getElementById("nombre").value = "";
+  document.getElementById("costo").value = "";
+  document.getElementById("markup").value = "";
+  document.getElementById("precioMayoristaActual").value = "";
+  document.getElementById("precioDetalleActual").value = "";
+
+  cambiarIVA("si");
+}
+
+</script>
+
+</body>
+</html>
